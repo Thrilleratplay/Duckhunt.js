@@ -1,4 +1,4 @@
-function duckhunt(){
+function duckhunt(callback){
 	var bullets=3, 
 	frameTimeout=100,			// the number of animation cycles that occur before the ducks fly away
 	duckWidth=145, 				// px
@@ -247,6 +247,9 @@ function duckhunt(){
 		}else{
 			// when complete, remove the evidence before the cops get here
 			document.body.removeChild(overlayOuter);
+			if(callback){
+				callback();
+			}
 		}
 	}
 
