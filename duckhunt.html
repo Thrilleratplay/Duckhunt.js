@@ -2,15 +2,42 @@
 <head>
 <link href="duckhunt.min.css" type="text/css" rel="stylesheet">
 <script type="text/javascript" src="duckhunt.min.js"></script>
+
+<link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<script src="jquery-1.10.2.min.js" type="text/javascript"></script>
+<style type="text/css">
+html{
+	background-color: #3fbfff;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	font-weight: bold;
+	font-size: 1.4em;
+}
+.handhover:hover{ cursor: pointer; cursor: hand; }
+.inline{display:inline;}
+.replay-text{ width:100%; text-align:center;}
+</style>
 <script>
+	$(window).resize(function() {
+		$(".replay-text").css('margin-top',(window.innerHeight/2));
+	});
 
-/////////////////////////////////////////////////////////////////////////////////
-//on load call
-window.onload =function(){
-	var dh= new duckhunt();
+	$(document).ready(function(){
+		$(".replay-text").css('margin-top',(window.innerHeight/2)).hide();	
+		duckhunt(replay);
+	});
 
-};
+
+	function replay(){
+		$('.replay-text').show();
+	}
 </script>
 </head>
-	<body></body>
+	<body>
+		<div class="replay-text">
+			<span class="handhover" onclick="$('.replay-text').hide();duckhunt(replay);return false;">
+				<h2 class="inline icon-repeat"></h2>
+				<h2 class="inline">  Reload</h2>
+			</span>
+		</div>	
+	</body>
 </html>
