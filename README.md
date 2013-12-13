@@ -16,6 +16,7 @@ Usage
 -----
 * Only duckhunt.min.css and duckhunt.min.js are needed with no other dependencies.  Load these on the desired page.
 * To start, simple execute the function "duckhunt()".  This function has an optional callback sent when complete.
+* If your next step is looking for a library or javscript snippet to trigger Duckhunt.js via a key sequence like the Konami code, might I suggest [cheet.js](http://namuol.github.io/cheet.js/).  It is the most robust of any I have seen and still simple.
 
 
 Demo
