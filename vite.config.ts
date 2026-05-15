@@ -27,7 +27,7 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: '../public/',
+    outDir: '../docs/',
     assetsDir: '',
     sourcemap: true,
     emptyOutDir: true,
