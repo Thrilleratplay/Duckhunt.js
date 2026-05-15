@@ -1,0 +1,55 @@
+<html>
+<head>
+<link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<style type="text/css">
+  html, body{
+    background-color: #3fbfff;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-weight: bold;
+    font-size: 1.4em;
+    height: 100%;
+  }
+
+  .hand-hover:hover{ cursor: pointer; cursor: hand; }
+  .inline{display:inline;}
+  .replay-text{ width:100%; text-align:center;}
+</style>
+<script>
+  /* cSpell: words duckhunt */
+  let replayElement = document.querySelector(".replay-text");
+
+  // On Resize
+	window.addEventListener('resize', function(event) {
+    replayElement.style.marginTop = window.innerHeight/2;
+	}, true);
+
+  function startGame() {
+    replayElement = document.querySelector(".replay-text");
+    replayElement.style.marginTop = window.innerHeight/2;
+    replayElement.style.display = 'none';
+    console.log(replayElement.style.marginTop);
+		globalThis.duckhunt(replay);
+	}
+
+  // On Load
+	document.addEventListener("DOMContentLoaded", startGame);
+
+  // Show replay when complete
+	function replay(){
+    replayElement.style.display = 'block';
+	}
+</script>
+  <script type="module" crossorigin src="/assets/index-BxOEi8Gv.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-DUcnEpqz.css">
+</head>
+	<body>
+		<div class="replay-text">
+			<span class="hand-hover" onclick="startGame()">
+				<h2 class="inline icon-repeat"></h2>
+				<h2 class="inline">  Reload</h2>
+			</span>
+			<div style="margin-top:25px"><a href="https://github.com/Thrilleratplay/Duckhunt.js/">.....or back to the Project</a></div>
+		</div>
+	</body>
+
+</html>
