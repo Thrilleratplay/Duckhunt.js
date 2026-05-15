@@ -9,10 +9,10 @@ export default defineConfig({
     checker({
       typescript: true,
       stylelint: {
-        lintCommand: 'stylelint **/*.css',
+        lintCommand: 'stylelint src/**/*.css',
       },
       eslint: {
-        lintCommand: 'eslint "./**/*.{ts,tsx}"',
+        lintCommand: 'eslint "./src/*.{ts,tsx}"',
       },
       overlay: {
         initialIsOpen: false,
@@ -28,9 +28,17 @@ export default defineConfig({
   },
   build: {
     outDir: '../public/',
+    assetsDir: '',
     sourcemap: true,
     emptyOutDir: true,
     assetsInlineLimit: 0,
+    rolldownOptions: {
+      output: {
+        assetFileNames: 'duckhunt[extname]',
+        chunkFileNames: 'duckhunt.js',
+        entryFileNames: 'duckhunt.js',
+      },
+    },
   },
   server: {
     open: 'index.html',

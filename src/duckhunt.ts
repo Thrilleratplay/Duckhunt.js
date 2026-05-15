@@ -1,4 +1,5 @@
 // cSpell: words duckhunt
+import './duckhunt.encoded.css';
 
 /**
  * Generate a random slope
@@ -345,3 +346,8 @@ const duckhunt = (callback?: () => void) => {
 };
 
 export default duckhunt;
+
+// eslint-disable-next-line max-len
+// eslint-disable-next-line no-global-assign, sonarjs/no-globals-shadowing, @typescript-eslint/ban-ts-comment
+// @ts-ignore
+globalThis.duckhunt = duckhunt;
