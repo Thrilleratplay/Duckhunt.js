@@ -14,8 +14,7 @@
     "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
     "verbatimModuleSyntax": false,
-    "module": "es2020",
-    "moduleResolution": "Bundler",
+    "module": "nodenext",
     "resolveJsonModule": true,
     "noEmit": true,
     "useDefineForClassFields": true,
@@ -25,6 +24,7 @@
   },
   "include": [
     "src",
-    "vite.config.ts"
+    "vite.config.ts",
+    "src/global.d.ts"
   ]
 }
