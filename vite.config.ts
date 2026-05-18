@@ -1,3 +1,4 @@
+// cSpell: words duckhunt
 import { defineConfig } from 'vite';
 import checker from 'vite-plugin-checker';
 import postCssNested from 'postcss-nested';
@@ -5,6 +6,7 @@ import postCssNested from 'postcss-nested';
 // https://vitejs.dev/config/
 export default defineConfig({
   root: 'src',
+  base: './',
   plugins: [
     checker({
       typescript: true,
@@ -27,12 +29,14 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: '../dist/',
+    outDir: '../dist',
     assetsDir: '',
     sourcemap: true,
     emptyOutDir: true,
-    assetsInlineLimit: 0,
     rolldownOptions: {
+      input: {
+        app: './duckhunt.html',
+      },
       output: {
         assetFileNames: 'duckhunt[extname]',
         chunkFileNames: 'duckhunt.js',
@@ -41,7 +45,7 @@ export default defineConfig({
     },
   },
   server: {
-    open: 'index.html',
+    open: 'duckhunt.html',
     cors: true,
   },
 });
