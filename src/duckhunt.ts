@@ -11,10 +11,14 @@ const randomSlope = () => Math.atan(Math.random() * 90);
 const duckhunt = (callback?: () => void) => {
   let bullets = 3;
   const frameTimeout = 100; // the number of animation cycles that occur before the ducks fly away
+  const duckFrameLength = 50; // the duration of the duck's animation frame in milliseconds
+  const duckShotFrameLength = 400; // the duration of the duck being shot frame in milliseconds
+  const dogFrameLength = 60; // the duration of the dog's animation frame in milliseconds
+  const dogLaughingFrameLength = 100; // duration of the dog's laugh animation frame in milliseconds
   const duckWidth = 145; // px
   const duckHeight = 145; // px
-  const sprite = [0, -145, -290]; // first,second,third animation frame
-  const duckOrientation = [0, -145, -290]; // horizontal,diagonally,vertically duck duckOrientation
+  const sprite = [0, -145, -290]; // first, second, third animation frame offset
+  const duckOrientation = [0, -145, -290]; // horizontal, diagonal, vertical duck orientation offset
 
   // outer overlay
   const overlayOuter = document.body.appendChild(document.createElement('div'));
@@ -71,6 +75,17 @@ const duckhunt = (callback?: () => void) => {
   const dog = overlay.appendChild(document.createElement('div'));
 
   /**
+   * Determine the spriteNum for a given duck Id
+   *
+   * @param duckId string
+   * @returns number
+   */
+  const duckSpriteNum = (duckId: string) => {
+    const duck = (duckId === 'duck1') ? duck1 : duck2;
+    return (duck.spriteNum === 2) ? 0 : duck.spriteNum + 1;
+  };
+
+  /**
    * Fly away animation sequence that will continue to the dog animation
    * when complete
    *
@@ -83,13 +98,13 @@ const duckhunt = (callback?: () => void) => {
     duck.e.style.top = `${duck.topOffset}px`;
 
     // update sprite
-    duck.spriteNum = ((duck.spriteNum === 2) ? 0 : duck.spriteNum + 1);
+    duck.spriteNum = duckSpriteNum(duckId);
     duck.e.style.backgroundPosition = `${sprite[duck.spriteNum]}px ${duckOrientation[duck.duckOrientationNum]}px`;
 
     // If the duck has not reached the top of the screen
     if (duck.topOffset > -duckHeight) {
       // lather, rinse, repeat
-      setTimeout(() => { duckFlyawayFrame(duckId); }, 50);
+      setTimeout(() => { duckFlyawayFrame(duckId); }, duckFrameLength);
     } else {
       // Woof
       duck.finished = true;
@@ -97,17 +112,6 @@ const duckhunt = (callback?: () => void) => {
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
       dogStart();
     }
-  };
-
-  /**
-   * Determine the spriteNum for a given duck Id
-   *
-   * @param duckId string
-   * @returns number
-   */
-  const duckSpriteNum = (duckId: string) => {
-    const duck = (duckId === 'duck1') ? duck1 : duck2;
-    return (duck.spriteNum === 2) ? 0 : duck.spriteNum + 1;
   };
 
   /**
@@ -119,10 +123,12 @@ const duckhunt = (callback?: () => void) => {
    */
   const duckFlapFrame = (duckId: string, frameNum: number) => {
     const duck = (duckId === 'duck1') ? duck1 : duck2;
+
     // If this duck been shot
     if (duck.shot) {
       return;
     }
+
     // Has this duck not been shot and the timeout has been reached
     // or are there no more bullets?
     if (frameNum > frameTimeout || bullets <= 0) {
@@ -131,6 +137,7 @@ const duckhunt = (callback?: () => void) => {
       duckFlyawayFrame(duckId);
       return;
     }
+
     // When hitting the edge of the screen, the duck should
     // reverse direction and at random but natural slope
 
@@ -143,6 +150,7 @@ const duckhunt = (callback?: () => void) => {
       duck.e.className = 'duckhunt-sprites duckhunt-duck';
       duck.slopeX = randomSlope();
     }
+
     // top
     if (duck.topOffset <= 0) {
       duck.slopeY = randomSlope();
@@ -164,7 +172,7 @@ const duckhunt = (callback?: () => void) => {
     duck.e.style.backgroundPosition = `${sprite[duck.spriteNum]}px ${duckOrientation[duck.duckOrientationNum]}px`;
 
     // lather, rinse, repeat
-    setTimeout(() => { duckFlapFrame(duckId, frameNum + 1); }, 50);
+    setTimeout(() => { duckFlapFrame(duckId, frameNum + 1); }, duckFrameLength);
   };
 
   /**
@@ -183,7 +191,7 @@ const duckhunt = (callback?: () => void) => {
     // If the top of the duck sprite has not reached the bottom of the overlay
     if (duck.topOffset < (overlay.offsetHeight + duckHeight)) {
       // lather, rinse, repeat
-      setTimeout(() => { duckShotFrame(duckId, !flip); }, 50);
+      setTimeout(() => { duckShotFrame(duckId, !flip); }, duckFrameLength);
     } else {
       // Woof
       duck.finished = true;
@@ -210,7 +218,7 @@ const duckhunt = (callback?: () => void) => {
       setTimeout(() => {
         duck.e.style.backgroundPosition = '-435px -290px';
         duckShotFrame(duckId, false);
-      }, 400);
+      }, duckShotFrameLength);
     }
   };
 
@@ -253,7 +261,7 @@ const duckhunt = (callback?: () => void) => {
   const dogLaughing = (framesLeft: number) => {
     if (framesLeft > 0) {
       dog.style.backgroundPosition = (dog.style.backgroundPosition === '-450px -435px') ? '-600px -435px' : '-450px -435px';
-      setTimeout(() => { dogLaughing(framesLeft - 1); }, 110);
+      setTimeout(() => { dogLaughing(framesLeft - 1); }, dogLaughingFrameLength);
     } else {
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
       dogFrame(false);
@@ -273,12 +281,12 @@ const duckhunt = (callback?: () => void) => {
       // height of the dog and the dog is going up, then subtract
       // from the top offset lather, rinse, repeat
       dog.style.top = `${Number.parseInt(dog.style.top, 10) - 20}px`;
-      setTimeout(() => { dogFrame(goingUp); }, 60);
+      setTimeout(() => { dogFrame(goingUp); }, dogFrameLength);
     } else if (dogPixelsDisplayed > 0 && !goingUp) {
       // if the dog is going down and some is still being displayed
       // add to the top offset lather, rinse, repeat
       dog.style.top = `${Number.parseInt(dog.style.top, 10) + 20}px`;
-      setTimeout(() => { dogFrame(goingUp); }, 60);
+      setTimeout(() => { dogFrame(goingUp); }, dogFrameLength);
     } else if (dogPixelsDisplayed >= 160 && dog.style.backgroundPosition === '-450px -435px') {
       // if the entire dog is being displayed, laugh before reversing
       dogLaughing(8);
