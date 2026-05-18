@@ -21,4 +21,4 @@ Usage
 
 Demo
 -----
-[Demo](http://thrilleratplay.github.io/Duckhunt.js/public/duckhunt.html) or it didn't happen
+[Demo](http://thrilleratplay.github.io/Duckhunt.js/dist/duckhunt.html) or it didn't happen
